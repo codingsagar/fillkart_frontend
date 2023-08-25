@@ -13,7 +13,7 @@ import poweredByStripeWhite from "../images/poweredbystripe-white.svg";
 
 const Cart = () => {
   const checkOurUrl =
-    "http://localhost:5200/api/stripe/create-checkout-session";
+    process.env.REACT_APP_BACKEND_API_URL +"stripe/create-checkout-session";
 
   const dispatch = useDispatch();
 
