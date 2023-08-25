@@ -30,6 +30,8 @@ export const getUserOrders = createAsyncThunk(
         error.toString();
       localStorage.removeItem("user");
       thunkAPI.dispatch(clearUser());
+      console.log(message);
+
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -51,6 +53,8 @@ export const getAllOrders = createAsyncThunk(
         error.toString();
       localStorage.removeItem("user");
       thunkAPI.dispatch(clearUser());
+      console.log(message);
+
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -72,6 +76,8 @@ export const getSalesData = createAsyncThunk(
         error.toString();
       localStorage.removeItem("user");
       thunkAPI.dispatch(clearUser());
+      console.log(message);
+
       return thunkAPI.rejectWithValue(message);
     }
   }

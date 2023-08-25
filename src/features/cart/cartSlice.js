@@ -26,6 +26,7 @@ export const addToCart = createAsyncThunk(
         error.toString();
       localStorage.clear();
       thunkAPI.dispatch(clearUser());
+      console.log(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -48,6 +49,7 @@ export const removeFromCart = createAsyncThunk(
 
       localStorage.clear();
       thunkAPI.dispatch(clearUser());
+      console.log(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -65,6 +67,7 @@ export const getCartData = createAsyncThunk("cart/all", async (thunkAPI) => {
       error.toString();
     localStorage.clear();
     thunkAPI.dispatch(clearUser());
+    console.log(message);
     return thunkAPI.rejectWithValue(message);
   }
 });

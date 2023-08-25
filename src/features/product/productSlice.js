@@ -29,6 +29,8 @@ export const newProduct = createAsyncThunk(
         error.toString();
       localStorage.removeItem("user");
       thunkAPI.dispatch(clearUser());
+      console.log(message);
+
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -50,6 +52,8 @@ export const updateProduct = createAsyncThunk(
         error.toString();
       localStorage.removeItem("user");
       thunkAPI.dispatch(clearUser());
+      console.log(message);
+
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -67,6 +71,8 @@ export const allProducts = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
+      console.log(message);
+
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -84,6 +90,8 @@ export const getProductWithId = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
+      console.log(message);
+
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -103,6 +111,8 @@ export const deleteProduct = createAsyncThunk(
         error.toString();
       localStorage.removeItem("user");
       thunkAPI.dispatch(clearUser());
+      console.log(message);
+
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -120,6 +130,8 @@ export const searchProducts = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
+      console.log(message);
+
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -139,6 +151,8 @@ export const getProductCount = createAsyncThunk(
         error.toString();
       localStorage.removeItem("user");
       thunkAPI.dispatch(clearUser());
+      console.log(message);
+
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -158,15 +172,16 @@ export const giveReview = createAsyncThunk(
         error.toString();
       localStorage.removeItem("user");
       thunkAPI.dispatch(clearUser());
+      console.log(message);
+
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-
 export const deleteReview = createAsyncThunk(
   "product/deleteReview",
-  async ({ reviewId, productId}, thunkAPI) => {
+  async ({ reviewId, productId }, thunkAPI) => {
     try {
       return await productService.deleteReview(reviewId, productId);
     } catch (error) {
@@ -178,6 +193,8 @@ export const deleteReview = createAsyncThunk(
         error.toString();
       localStorage.removeItem("user");
       thunkAPI.dispatch(clearUser());
+      console.log(message);
+
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -300,8 +317,7 @@ export const productSlice = createSlice({
       .addCase(deleteReview.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
-      })
-      
+      });
   },
 });
 

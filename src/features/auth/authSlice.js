@@ -28,6 +28,9 @@ export const register = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
+
+      console.log(message);
+
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -43,6 +46,8 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
       (error.response && error.response.data && error.response.data.message) ||
       error.message ||
       error.toString();
+    console.log(message);
+
     return thunkAPI.rejectWithValue(message);
   }
 });
@@ -59,6 +64,8 @@ export const logout = createAsyncThunk("auth/logout", async (thunkAPI) => {
       error.toString();
     localStorage.removeItem("user");
     thunkAPI.dispatch(clearUser());
+    console.log(message);
+
     return thunkAPI.rejectWithValue(message);
   }
 });
@@ -75,6 +82,8 @@ export const getAllUsers = createAsyncThunk("get/users", async (thunkAPI) => {
       error.toString();
     localStorage.removeItem("user");
     thunkAPI.dispatch(clearUser());
+    console.log(message);
+
     return thunkAPI.rejectWithValue(message);
   }
 });
@@ -94,6 +103,8 @@ export const updateUserRole = createAsyncThunk(
         error.toString();
       localStorage.removeItem("user");
       thunkAPI.dispatch(clearUser());
+      console.log(message);
+
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -114,6 +125,8 @@ export const deleteUser = createAsyncThunk(
         error.toString();
       localStorage.removeItem("user");
       thunkAPI.dispatch(clearUser());
+      console.log(message);
+
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -129,9 +142,9 @@ export const authSlice = createSlice({
       state.isError = false;
       state.message = "";
     },
-    clearUser: (state)=>{
+    clearUser: (state) => {
       state.user = null;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -190,5 +203,5 @@ export const authSlice = createSlice({
   },
 });
 
-export const { reset,clearUser } = authSlice.actions;
+export const { reset, clearUser } = authSlice.actions;
 export default authSlice.reducer;
