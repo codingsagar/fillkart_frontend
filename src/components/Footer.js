@@ -1,4 +1,5 @@
 import React from "react";
+import stripePayment from "../images/poweredbystripe-white.svg"
 
 const Footer = () => {
   return (
@@ -22,6 +23,7 @@ const Footer = () => {
           <li>Sitemap</li>
         </ul>
 
+          <img src={stripePayment} alt=""  className="w-24 md:w-28 mt-3"/>
           <p className="text-[12px] mt-3 font-medium">E-mail : care@fillkart.com</p>
 
           <div className="text-sm mt-1 font-medium">

@@ -10,7 +10,6 @@ const styleLogo ={
 
 const TopBrands = () => {
   return (
-    //#E5DEFF
     <div className='bg-[#d8d1f0] flex flex-col my-10 items-center gap-y-10 justify-center py-10'>
         <h2 className='text-xl font-bold'>Products from all top brands</h2>
         <div className='grid grid-cols-3 gap-x-12 md:grid-cols-4 text-white md:gap-20 mb-4 items-center gap-10'>

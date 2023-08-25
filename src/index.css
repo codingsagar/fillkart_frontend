@@ -1,14 +1,111 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,500&display=swap');
-*{
-    font-family: roboto;
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,500&display=swap");
+
+* {
+  font-family: roboto;
 }
+
+.sidebar-icon {
+  transition: all 0.2s ease-in;
+}
+.sidebar-logout {
+  transition: all 0.2s ease-in;
+}
+
+.sidebar-icon:hover {
+  color: #ffffff;
+  border-left-width: 4px;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-left-color: #ffffff;
+  padding-left: 5px;
+}
+.sidebar-logout:hover {
+  color: rgb(255, 48, 48);
+  border-left-width: 4px;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-left-color: rgb(255, 48, 48);
+  padding-left: 5px;
+}
+
+a.active {
+  color: white;
+  font-weight: bold;
+}
+
+@media (max-width: 1050px) {
+  a.active {
+    color: #3a1cb0;
+  }
+  .sidebar-icon:hover {
+    color: #3a1cb0;
+  }
+  .sidebar-logout {
+    color: rgb(255, 48, 48);
+    border-left-width: 4px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-left-color: rgb(255, 48, 48);
+    padding-left: 5px;
+  }
+}
+
+.modal-open {
+  overflow: hidden;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  cursor: pointer;
+}
+
+@media (min-width:500px) {
+    .pagination{
+        width: 40vw;
+    }
+}
+
+.pagination a {
+    color: #6c7ac9;
+    font-weight: bold;
+}
+
+.pagination__link {
+  font-weight: bold;
+}
+
+.pagination__link--active a {
+  color: white;
+  background-color: #6c7ac9;
+  padding: 3px 7px;
+
+}
+
+.pagination__link--disabled a {
+  color: rgb(198, 197, 202);
+}
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.btn-primary{
-    @apply bg-[#3A1CB0] text-white font-medium py-[5px] px-4 rounded-md
+.btn-primary {
+  @apply bg-[#3A1CB0] text-white font-medium py-[5px] px-4 rounded-md;
 }
-.btn-cart-remove{
-    @apply bg-red-600 text-white font-medium py-[5px] px-4 rounded-md
+.btn {
+  @apply text-white font-medium py-[5px] px-4 rounded-md;
+}
+
+.btn-layout {
+  @apply font-medium py-[5px] px-4 rounded-md;
+}
+
+.btn-white {
+  @apply text-[#3A1CB0] bg-white font-medium py-[5px] px-4 rounded-md;
+}
+.btn-cart-remove {
+  @apply bg-red-600 text-white font-medium py-[5px] px-4 rounded-md;
 }

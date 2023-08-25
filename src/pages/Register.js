@@ -1,55 +1,80 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
-import { register, reset } from "../features/auth/authSlice";
+import { register as registerUser, reset as resetUserState } from "../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
+import Lottie from "lottie-react";
+import { useForm } from "react-hook-form";
+
+import RegisterLottieData from "../images/registered.json";
 
 const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const { user, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
-  const username = "Karan";
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
+  const effectRan = useRef(false);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+  const [lottie, setLottie] = useState(false);
 
   useEffect(() => {
     if (isError) {
       toast.error(message);
     }
     if (isSuccess) {
-      toast.success("You are registerd successfully");
-      navigate("/");
-    }
-    if(user){
-      toast.success("You are already registered !");
-      navigate('/');
+      setLottie(true);
     }
 
-    dispatch(reset());
+    if (effectRan.current === false) {
+      if (user) {
+        toast.success("You are already registerd !");
+        navigate("/");
+      }
+    }
 
+    dispatch(resetUserState());
 
-  }, [isError, isSuccess, user, navigate, dispatch, message]);
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    const userData = {
-      name:username,
-      email,
-      password,
+    return () => {
+      effectRan.current = true;
     };
-    dispatch(register(userData));
+  }, [isError, isSuccess, user, message, dispatch,navigate]);
+
+  useEffect(() => {
+    document.title = "Register your account - Fillkart";
+  }, [])
+  
+
+  const onSubmit = (data) => {
+    dispatch(registerUser(data));
+    reset()
   };
 
-  if (isLoading) {
-    return "Registering your account !";
+  if (lottie === true) {
+    return (
+      <div className="min-h-screen grid place-content-center">
+        <Lottie
+          style={{ height: 450 }}
+          animationData={RegisterLottieData}
+          loop={false}
+          onComplete={() => {
+            navigate("/");
+          }}
+        />
+      </div>
+    );
   }
   return (
     <>
-      <ToastContainer pauseOnFocusLoss position="top-center" autoClose={5000} />
       <section className="bg-gray-50 dark:bg-gray-900 min-h-[80vh]">
         <div
           className={`flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 `}
@@ -60,9 +85,40 @@ const Register = () => {
           >
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                Register your account
+                Register a new account
               </h1>
-              <form className="space-y-4 md:space-y-6" onSubmit={onSubmit}>
+              <form
+                className="space-y-4 md:space-y-6"
+                onSubmit={handleSubmit(onSubmit)}
+                noValidate={true}
+              >
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Enter Name
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    {...register("name", { required: true, minLength: 3 })}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg 
+                  block w-full p-2.5 dark:bg-gray-700 
+                      dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
+                      dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Enter your full name"
+                  />
+                  {errors.name?.type === "required" && (
+                    <p className="text-red-500 pt-2">Name is required</p>
+                  )}
+                  {errors.name?.type === "minLength" && (
+                    <p className="text-red-500 pt-2">
+                      Minimum length of name must be 3.
+                    </p>
+                  )}
+                </div>
                 <div>
                   <label
                     htmlFor="email"
@@ -74,15 +130,24 @@ const Register = () => {
                     type="email"
                     name="email"
                     id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    {...register("email", {
+                      required: true,
+                      pattern: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                    })}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg 
                   block w-full p-2.5 dark:bg-gray-700 
                       dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
                       dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="name@company.com"
-                    required
                   />
+                  {errors.email?.type === "pattern" && (
+                    <p className="text-red-500 pt-2">
+                      Please, enter a valid email.
+                    </p>
+                  )}
+                  {errors.email?.type === "required" && (
+                    <p className="text-red-500 pt-2">Email is required</p>
+                  )}
                 </div>
                 <div>
                   <label
@@ -94,15 +159,21 @@ const Register = () => {
                   <input
                     type="password"
                     name="password"
-                    value={password}
-                    minLength={8}
-                    onChange={(e) => setPassword(e.target.value)}
+                    {...register("password", { required: true, minLength: 8 })}
                     id="password"
+                    autoComplete="on"
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
                       dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    required
                   />
+                  {errors.password?.type === "required" && (
+                    <p className="text-red-500 pt-2">Password is required</p>
+                  )}
+                  {errors.password?.type === "minLength" && (
+                    <p className="text-red-500 pt-2">
+                      The minimum length of password must be 8.
+                    </p>
+                  )}
                 </div>
                 <button
                   type="submit"
