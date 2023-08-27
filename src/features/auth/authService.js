@@ -40,6 +40,7 @@ const logout = async () => {
   const axiosInstance = axios.create({ withCredentials: true });
   const response = await axiosInstance.post(USER_BASE_API_URL + "/logout");
   localStorage.removeItem("user");
+  console.log(response.data);
   return response.data;
 };
 
