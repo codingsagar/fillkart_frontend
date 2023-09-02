@@ -17,7 +17,6 @@ import Register from "./pages/Register";
 import SearchedProducts from "./components/SearchedProducts";
 import UserProfile from "./pages/UserProfile";
 
-
 const NewProduct = lazy(() => import("./components/NewProduct"));
 const ManageUsers = lazy(() => import("./components/ManageUsers"));
 const AllOrders = lazy(() => import("./components/AllOrders"));
@@ -31,8 +30,6 @@ const Cart = lazy(() => import("./pages/Cart"));
 const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess"));
 const PaymentFailure = lazy(() => import("./pages/PaymentFailure"));
 const Orders = lazy(() => import("./components/Orders"));
-
-
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -77,6 +74,7 @@ const router = createBrowserRouter(
             </Suspense>
           }
         />
+        <Route path="*" element={<ErrorPage />} />
       </Route>
 
       <Route
@@ -99,15 +97,14 @@ const router = createBrowserRouter(
             <Route path="manage/users" element={<ManageUsers />} />
             <Route path="view/orders" element={<AllOrders />} />
           </Route>
+          <Route path="*" element={<ErrorPage />} />
         </Route>
       </Route>
-      <Route path="*" element={<ErrorPage />} />
     </Route>
   )
 );
 
 function App() {
-
   return <RouterProvider router={router} />;
 }
 
